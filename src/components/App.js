@@ -69,7 +69,7 @@ class App extends React.Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-4 responsive-wrap" >
-            <div className="row detail-filter-wrap">
+            {/* <div className="row detail-filter-wrap">
               <div className="col-md-4 featured-responsive">
                 <div className="detail-filter-text">
                   <p>34 Results For <span>Events</span></p>
@@ -131,7 +131,7 @@ class App extends React.Component {
                   <label class="custom-control-label" for="customCheck4">Annenberg</label>
                 </div>
               </div>
-            </div>
+            </div> */}
             <SideBar
               events={this.state.events}
               showInfo={this.showInfo}
