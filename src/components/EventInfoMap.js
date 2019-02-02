@@ -8,37 +8,33 @@ export default class EventInfoMap extends React.Component {
   }
 
   render() {
-    console.log(this.props.isOpen);
     const markers = this.props.events.map((event, index) => (
       <Marker
         key={index}
         position={{ lat: event.lat, lng: event.lng }}
-        onClick={()=>this.handleClick(index)}
+        onClick={() => this.handleClick(index)}
       >
         {(this.props.infoIndex === index && this.props.isOpen) &&
           <InfoWindow
             onCloseClick={this.props.handleToggleOpen}
-            options={{ maxWidth: 500 }}
+            options={{ maxWidth: 400}}
           >
-            <div>
-              <div className="container-fluid text-primary">
-                <h4>{event.title}</h4>
-              </div>
-              <hr />
-              <div className="container">
-                <div className="row">
-                  <div className="col-sm-4">
-                    <img src="http://maps.marnoto.com/en/5wayscustomizeinfowindow/images/vistalegre.jpg" alt="Porcelain Factory of Vista Alegre" height="115" width="83">
-                    </img>
-                  </div>
-                  <div className="col-sm-8">
-                    <h6 className="text-primary">Description</h6>
-                    <p>{event.descript}</p>
-                    <h6 className="text-primary">Time</h6>
-                    <p>{event.date}, {event.time}</p>
-                    <h6 className="text-primary">Location</h6>
-                    <p>{event.location}</p>
-                  </div>
+            <div className="col-md-12">
+              <div className="featured-place-wrap-non-hover">
+                <img src="images/featured1.jpg" className="img-fluid" alt="#" />
+                <div className="featured-title-box">
+                  <h6>{event.title}</h6>
+                  <ul>
+                    <li><span className="icon-clock" />
+                      <p>{event.date}, {event.time}</p>
+                    </li>
+                    <li><span className="icon-location-pin" />
+                      <p>{event.location}</p>
+                    </li>
+                    <li><span className="icon-note" />
+                      <p>{event.descript}</p>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

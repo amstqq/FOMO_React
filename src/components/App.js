@@ -134,7 +134,10 @@ class App extends React.Component {
             </div> */}
             <SideBar
               events={this.state.events}
+              handleToggleOpen={this.handleToggleOpen}
               showInfo={this.showInfo}
+              isOpen={this.state.isOpen}
+              infoIndex={this.state.infoIndex}
             />
           </div>
           <div className="col-md-8 responsive-wrap map-wrap">
