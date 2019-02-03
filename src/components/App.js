@@ -14,20 +14,50 @@ class App extends React.Component {
       isLoading: true,
       isOpen: false,
       infoIndex: null,
-      mapCenter: { lat: 34.022453, lng: -118.285067 }
+      mapCenter: { lat: 34.022453, lng: -118.285067 },
+      currPage: 0,
+      hasPrev: false,
+      hasNext: true,
     };
-  }
 
-  componentDidMount() {
-    axios.get("/api/test")
-      .then(result => this.setState({
-        events: result.data,
-        isLoading: false
-      }))
-      .catch(error => this.setState({
-        error,
-        isLoading: false
-      }));
+    // retrieve first 3 posts info from database
+    axios
+      .get(`/api/test/1}`)
+      .then(res => {
+        if (res.data.error) {
+          this.setState({
+            isLoading: false
+          })
+          console.error(res.data.message);
+        } else {
+          this.setState({
+            currPage: this.state.currPage + 1,
+            events: res.data.message,
+            isOpen: false,
+            infoIndex: null,
+          });
+          axios
+            .get(`/api/test/${this.state.currPage + 1}`)
+            .then(res => {
+              if (res.data.error) {
+                console.log(error);
+              }
+              else if (res.data.message.length != 0) {
+                this.setState({
+                  hasNext: true
+                });
+              }
+              else {
+                this.setState({
+                  hasNext: false
+                })
+              }
+              this.setState({
+                isLoading: false
+              });
+            });
+        }
+      })
   }
 
   handleToggleOpen = () => {
@@ -41,6 +71,112 @@ class App extends React.Component {
       isOpen: this.state.infoIndex !== index || !this.state.isOpen,
       infoIndex: index,
     });
+  }
+
+  onMarkerClick = (index) => {
+    const divToScrollTo = document.getElementById(index);
+    if (divToScrollTo) {
+      divToScrollTo.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }
+
+  onNext = () => {
+    this.setState({ isLoading: true });
+
+    // Get data for next page
+    axios
+      .get(`/api/test/${this.state.currPage + 1}`)
+      .then(res => {
+        if (res.data.error) {
+          this.setState({
+            isLoading: false
+          })
+          console.error(res.data.message);
+        } else {
+          this.setState({
+            currPage: this.state.currPage + 1,
+            events: res.data.message,
+            isOpen: false,
+            infoIndex: null,
+          });
+          axios
+            .get(`/api/test/${this.state.currPage + 1}`)
+            .then(res => {
+              console.log(this.state.currPage + 1);
+              if (res.data.error) {
+                console.log(error);
+              }
+              else if (res.data.message.length != 0) {
+                this.setState({
+                  hasNext: true
+                });
+              }
+              else {
+                this.setState({
+                  hasNext: false
+                })
+              }
+
+              this.setState({
+                hasPrev: this.state.currPage == 1 ? false : true,
+                isLoading: false
+              });
+            });
+        }
+      })
+  }
+
+  onPrev = () => {
+    this.setState({ isLoading: true });
+
+    axios
+      .get(`/api/test/${this.state.currPage - 1}`)
+      .then(res => {
+        if (res.data.error) {
+          this.setState({
+            isLoading: false
+          })
+          console.error(res.data.message);
+        } else {
+          this.setState({
+            currPage: this.state.currPage - 1,
+            events: res.data.message,
+            isOpen: false,
+            infoIndex: null,
+          });
+          if (this.state.currPage == 1) {
+            this.setState({
+              isLoading: false,
+              hasPrev: false,
+              hasNext: true,
+            });
+          }
+          else {
+            axios
+              .get(`/api/test/${this.state.currPage - 1}`)
+              .then(res => {
+                if (res.data.error) {
+                  console.log(error);
+                }
+                else if (res.data.message.length != 0) {
+                  this.setState({
+                    hasPrev: true
+                  });
+                }
+                else {
+                  this.setState({
+                    hasPrev: false
+                  })
+                }
+                this.setState({
+                  hasNext: true,
+                  isLoading: false
+                });
+              });
+          }
+
+        }
+      })
   }
 
   render() {
@@ -69,87 +205,24 @@ class App extends React.Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-4 responsive-wrap" >
-            {/* <div className="row detail-filter-wrap">
-              <div className="col-md-4 featured-responsive">
-                <div className="detail-filter-text">
-                  <p>34 Results For <span>Events</span></p>
-                </div>
-              </div>
-              <div className="col-md-8 featured-responsive">
-                <div className="detail-filter">
-                  <p>Filter by</p>
-                  <form className="filter-dropdown">
-                    <select
-                      className="custom-select mr-2 mr-sm-2 mb-2 mb-sm-1 mt-sm-1"
-                      id="inlineFormCustomSelect"
-                    >
-                      <option selected>Best Match</option>
-                      <option value={1}>One</option>
-                      <option value={2}>Two</option>
-                      <option value={3}>Three</option>
-                    </select>
-                  </form>
-                  <form className="filter-dropdown">
-                    <select
-                      className="custom-select mb-2 mr-sm-2 mb-sm-0"
-                      id="inlineFormCustomSelect1"
-                    >
-                      <option selected>Popularity</option>
-                      <option value={1}>One</option>
-                      <option value={2}>Two</option>
-                      <option value={3}>Three</option>
-                    </select>
-                  </form>
-                  <div className="map-responsive-wrap">
-                    <a className="map-icon" href="#"><span className="icon-location-pin" /></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row detail-checkbox-wrap">
-              <div className="col-sm-12 col-md-6">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                  <label class="custom-control-label" for="customCheck1">Dornsife</label>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                  <label class="custom-control-label" for="customCheck2">Viterbi</label>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                  <label class="custom-control-label" for="customCheck3">Marshall</label>
-                </div>
-              </div>
-              <div className="col-sm-12 col-md-6">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                  <label class="custom-control-label" for="customCheck4">Annenberg</label>
-                </div>
-              </div>
-            </div> */}
             <SideBar
-              events={this.state.events}
+              {...this.state}
               handleToggleOpen={this.handleToggleOpen}
               showInfo={this.showInfo}
-              isOpen={this.state.isOpen}
-              infoIndex={this.state.infoIndex}
+              onMarkerClick={this.onMarkerClick}
+              onNext={this.onNext}
+              onPrev={this.onPrev}
             />
           </div>
           <div className="col-md-8 responsive-wrap map-wrap">
             <div className="map-fix">
               <div id="map">
                 <MapContainer
-                  events={this.state.events}
+                  {...this.state}
                   handleToggleOpen={this.handleToggleOpen}
                   showInfo={this.showInfo}
-                  isOpen={this.state.isOpen}
-                  infoIndex={this.state.infoIndex}
                   mapCenter={this.state.mapCenter}
+                  onMarkerClick={this.onMarkerClick}
                 />
               </div>
             </div>

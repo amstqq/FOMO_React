@@ -1,17 +1,9 @@
 import React from "react";
-import { white } from "ansi-colors";
 
 export default class SideBarItem extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            open: false,
-        };
-    }
-
     handleClick = () => {
         this.props.onClick(this.props.id);
+        this.props.onMarkerClick(this.props.id)
     }
 
     handleCloseClick = () => {
@@ -19,9 +11,13 @@ export default class SideBarItem extends React.Component {
     }
 
     render() {
+        let name = this.props.id.toString();
         if (this.props.infoIndex === this.props.id && this.props.isOpen) {
             return (
-                <div className="col-md-12 featured-responsive" onClick={this.handleCloseClick} style={{ cursor: "pointer" }}>
+                <div className="col-md-12 featured-responsive"
+                    onClick={this.handleCloseClick}
+                    style={{ cursor: "pointer" }}
+                    id={name}>
                     <div className="featured-place-wrap featured-place-wrap-active">
                         <img src="images/featured1.jpg" className="img-fluid" alt="#" />
                         <div className="featured-title-box">
@@ -47,7 +43,10 @@ export default class SideBarItem extends React.Component {
             );
         }
         return (
-            <div className="col-md-12 featured-responsive" onClick={this.handleClick} style={{ cursor: "pointer" }}>
+            <div className="col-md-12 featured-responsive" 
+                onClick={this.handleClick} 
+                style={{ cursor: "pointer" }}
+                id={name}>
                 <div className="featured-place-wrap">
                     <img src="images/featured1.jpg" className="img-fluid" alt="#" />
                     <div className="featured-title-box">

@@ -534,7 +534,7 @@ footer {
   .copyright p {
     font-size: 18px;
     font-weight: 400;
-    color: #ccc;
+    color: white;
     margin: 0; }
   .copyright ul {
     margin: 25px 0 0;
@@ -543,7 +543,7 @@ footer {
       list-style: none;
       display: inline-block; }
       .copyright ul li a {
-        color: #ccc;
+        color: white;
         font-size: 22px;
         padding: 0 10px;
         opacity: 0.6;
