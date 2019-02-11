@@ -22,7 +22,7 @@ class App extends React.Component {
 
     // retrieve first 3 posts info from database
     axios
-      .get(`/api/test/1}`)
+      .get(`/api/dev/1}`)
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -37,7 +37,7 @@ class App extends React.Component {
             infoIndex: null,
           });
           axios
-            .get(`/api/test/${this.state.currPage + 1}`)
+            .get(`/api/dev/${this.state.currPage + 1}`)
             .then(res => {
               if (res.data.error) {
                 console.log(error);
@@ -85,7 +85,7 @@ class App extends React.Component {
 
     // Get data for next page
     axios
-      .get(`/api/test/${this.state.currPage + 1}`)
+      .get(`/api/dev/${this.state.currPage + 1}`)
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -100,7 +100,7 @@ class App extends React.Component {
             infoIndex: null,
           });
           axios
-            .get(`/api/test/${this.state.currPage + 1}`)
+            .get(`/api/dev/${this.state.currPage + 1}`)
             .then(res => {
               console.log(this.state.currPage + 1);
               if (res.data.error) {
@@ -130,7 +130,7 @@ class App extends React.Component {
     this.setState({ isLoading: true });
 
     axios
-      .get(`/api/test/${this.state.currPage - 1}`)
+      .get(`/api/dev/${this.state.currPage - 1}`)
       .then(res => {
         if (res.data.error) {
           this.setState({
@@ -153,7 +153,7 @@ class App extends React.Component {
           }
           else {
             axios
-              .get(`/api/test/${this.state.currPage - 1}`)
+              .get(`/api/dev/${this.state.currPage - 1}`)
               .then(res => {
                 if (res.data.error) {
                   console.log(error);
