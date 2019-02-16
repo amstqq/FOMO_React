@@ -12,14 +12,14 @@ export default class SideBar extends React.Component {
   }
 
   render() {
-    const SideBarItems = this.props.events.map((event, index) => (
+    const SideBarItems = this.props.events.map(event => (
       <SideBarItem
-        key={index}
+        key={event.id}
         onCloseClick={this.props.handleToggleOpen}
         onClick={this.props.showInfo}
         onMarkerClick={this.props.onMarkerClick}
         event={event}
-        id={index}
+        id={event.id}
         isOpen={this.props.isOpen}
         infoIndex={this.props.infoIndex}
       />

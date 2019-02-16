@@ -9,13 +9,13 @@ export default class EventInfoMap extends React.Component {
   }
 
   render() {
-    const markers = this.props.events.map((event, index) => (
+    const markers = this.props.events.map(event => (
         <Marker
-          key={index}
+          key={event.id}
           position={{ lat: event.lat, lng: event.lng }}
-          onClick={() => this.handleClick(index)}
+          onClick={() => this.handleClick(event.id)}
         >
-          {(this.props.infoIndex === index && this.props.isOpen) &&
+          {(this.props.infoIndex === event.id && this.props.isOpen) &&
             <InfoWindow
               onCloseClick={this.props.handleToggleOpen}
               options={{ maxWidth: 400 }}
