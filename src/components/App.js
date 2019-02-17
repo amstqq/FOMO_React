@@ -1,29 +1,32 @@
 import React from "react";
 import axios from "axios";
 
-import SideBar from "./SideBar";
-import MapContainer from "./MapContainer";
+import SideBar from "./SideBar/SideBar";
+import MapContainer from "./map/MapContainer";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      initialLoad: true,
       events: null,
-      isLoading: true,
+      isLoading: false,
       isOpen: false,
       infoIndex: null,
-      mapCenter: { lat: 33.649593, lng: -117.840684 },
+      mapCenter: { lat: 33.64608, lng: -117.842626 },
       currPage: 0,
       hasPrev: false,
-      hasNext: true
+      hasNext: true,
+      apiUrl: "/api/dev/",
+      query: ""
     };
 
     // retrieve first 3 posts info from database
-    axios.get(`/api/dev/1}`).then(res => {
+    axios.get(`/api/dev/1`).then(res => {
       if (res.data.error) {
         this.setState({
-          isLoading: false
+          initialLoad: false
         });
         console.error(res.data.message);
       } else {
@@ -46,7 +49,7 @@ class App extends React.Component {
             });
           }
           this.setState({
-            isLoading: false
+            initialLoad: false
           });
         });
       }
@@ -77,91 +80,167 @@ class App extends React.Component {
     this.setState({ isLoading: true });
 
     // Get data for next page
-    axios.get(`/api/dev/${this.state.currPage + 1}`).then(res => {
-      if (res.data.error) {
-        this.setState({
-          isLoading: false
-        });
-        console.error(res.data.message);
-      } else {
-        this.setState({
-          currPage: this.state.currPage + 1,
-          events: res.data.message,
-          isOpen: false,
-          infoIndex: null
-        });
-        axios.get(`/api/dev/${this.state.currPage + 1}`).then(res => {
-          console.log(this.state.currPage + 1);
-          if (res.data.error) {
-            console.log(error);
-          } else if (res.data.message.length != 0) {
-            this.setState({
-              hasNext: true
-            });
-          } else {
-            this.setState({
-              hasNext: false
-            });
-          }
-
+    axios
+      .get(`${this.state.apiUrl}${this.state.currPage + 1}${this.state.query}`)
+      .then(res => {
+        if (res.data.error) {
           this.setState({
-            hasPrev: this.state.currPage == 1 ? false : true,
             isLoading: false
           });
-        });
-      }
-    });
+          console.error(res.data.message);
+        } else {
+          this.setState({
+            currPage: this.state.currPage + 1,
+            events: res.data.message,
+            isOpen: false,
+            infoIndex: null
+          });
+          axios
+            .get(
+              `${this.state.apiUrl}${this.state.currPage + 1}${
+                this.state.query
+              }`
+            )
+            .then(res => {
+              console.log(this.state.currPage + 1);
+              if (res.data.error) {
+                console.log(error);
+              } else if (res.data.message.length != 0) {
+                this.setState({
+                  hasNext: true
+                });
+              } else {
+                this.setState({
+                  hasNext: false
+                });
+              }
+
+              this.setState({
+                hasPrev: this.state.currPage == 1 ? false : true,
+                isLoading: false
+              });
+            });
+        }
+      });
   };
 
   onPrev = () => {
     this.setState({ isLoading: true });
 
-    axios.get(`/api/dev/${this.state.currPage - 1}`).then(res => {
-      if (res.data.error) {
-        this.setState({
-          isLoading: false
-        });
-        console.error(res.data.message);
-      } else {
-        this.setState({
-          currPage: this.state.currPage - 1,
-          events: res.data.message,
-          isOpen: false,
-          infoIndex: null
-        });
-        if (this.state.currPage == 1) {
+    axios
+      .get(`${this.state.apiUrl}${this.state.currPage - 1}${this.state.query}`)
+      .then(res => {
+        if (res.data.error) {
           this.setState({
-            isLoading: false,
-            hasPrev: false,
-            hasNext: true
+            isLoading: false
           });
+          console.error(res.data.message);
         } else {
-          axios.get(`/api/dev/${this.state.currPage - 1}`).then(res => {
-            if (res.data.error) {
-              console.log(error);
-            } else if (res.data.message.length != 0) {
-              this.setState({
-                hasPrev: true
+          this.setState({
+            currPage: this.state.currPage - 1,
+            events: res.data.message,
+            isOpen: false,
+            infoIndex: null
+          });
+          if (this.state.currPage == 1) {
+            this.setState({
+              isLoading: false,
+              hasPrev: false,
+              hasNext: true
+            });
+          } else {
+            axios
+              .get(
+                `${this.state.apiUrl}${this.state.currPage - 1}${
+                  this.state.query
+                }`
+              )
+              .then(res => {
+                if (res.data.error) {
+                  console.log(error);
+                } else if (res.data.message.length != 0) {
+                  this.setState({
+                    hasPrev: true
+                  });
+                } else {
+                  this.setState({
+                    hasPrev: false
+                  });
+                }
+                this.setState({
+                  hasNext: true,
+                  isLoading: false
+                });
               });
+          }
+        }
+      });
+  };
+
+  handleButtonClick = query => {
+    this.setState(
+      {
+        isLoading: true,
+        isOpen: false,
+        infoIndex: null,
+        currPage: 0,
+        hasPrev: false,
+        hasNext: true,
+        apiUrl:
+          query.length === 0 || /^\s*$/.test(query)
+            ? "api/dev/"
+            : "/api/search/",
+        query:
+          query.length === 0 || /^\s*$/.test(query) ? "" : `?search=${query}`
+      },
+      () => {
+        axios
+          .get(
+            `${this.state.apiUrl}${this.state.currPage + 1}${this.state.query}`
+          )
+          .then(res => {
+            if (res.data.error) {
+              this.setState({
+                isLoading: false
+              });
+              console.error(res.data.message);
             } else {
               this.setState({
-                hasPrev: false
+                currPage: this.state.currPage + 1,
+                events: res.data.message,
+                isOpen: false,
+                infoIndex: null
               });
+              axios
+                .get(
+                  `${this.state.apiUrl}${this.state.currPage + 1}${
+                    this.state.query
+                  }`
+                )
+                .then(res => {
+                  if (res.data.error) {
+                    console.log(error);
+                  } else if (res.data.message.length != 0) {
+                    this.setState({
+                      hasNext: true
+                    });
+                  } else {
+                    this.setState({
+                      hasNext: false
+                    });
+                  }
+                  this.setState({
+                    isLoading: false
+                  });
+                });
             }
-            this.setState({
-              hasNext: true,
-              isLoading: false
-            });
           });
-        }
       }
-    });
+    );
   };
 
   render() {
-    const { isLoading } = this.state;
-
-    if (isLoading) {
+    if (this.state.initialLoad) {
       return (
         <div class="container-fluid" style={{ minHeight: "100vh" }}>
           <div
@@ -193,6 +272,7 @@ class App extends React.Component {
               onMarkerClick={this.onMarkerClick}
               onNext={this.onNext}
               onPrev={this.onPrev}
+              onButtonClick={this.handleButtonClick}
             />
           </div>
           <div className="col-md-8 responsive-wrap map-wrap">
