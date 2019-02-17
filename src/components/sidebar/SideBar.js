@@ -52,11 +52,11 @@ export default class SideBar extends React.Component {
         {this.props.isLoading ? (
           Loading
         ) : this.props.events.length == 0 ? (
-          <div className="detail-options-wrap" style={{ minHeight: "70vh" }} />
+          <div className="detail-options-wrap" style={{ minHeight: "65vh" }} />
         ) : (
           <div
             className="detail-options-wrap scrollable"
-            style={{ maxHeight: "70vh" }}
+            style={{ minHeight: "65vh" }}
           >
             {SideBarItems}
           </div>
