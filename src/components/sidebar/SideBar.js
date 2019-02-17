@@ -45,14 +45,21 @@ export default class SideBar extends React.Component {
     );
 
     return (
-      <div className="row light-bg" style={{ minHeight: "100vh" }}>
+      <div className="row light-bg">
         <div className="col-md-12 mt-4 mb-3">
           <Search onButtonClick={this.props.onButtonClick} />
         </div>
         {this.props.isLoading ? (
           Loading
-        ) : this.props.events.length == 0 ? null : (
-          <div className="detail-options-wrap scrollable">{SideBarItems}</div>
+        ) : this.props.events.length == 0 ? (
+          <div className="detail-options-wrap" style={{ minHeight: "70vh" }} />
+        ) : (
+          <div
+            className="detail-options-wrap scrollable"
+            style={{ maxHeight: "70vh" }}
+          >
+            {SideBarItems}
+          </div>
         )}
         <div className="col-md-12 my-3">
           <nav>

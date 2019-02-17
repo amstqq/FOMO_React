@@ -38,7 +38,11 @@ export default class EventInfoMap extends React.Component {
                           <span className="icon-location-pin custom" />
                         </div>
                         <div className="col">
-                          <p className="custom">{singleEvent.location}</p>
+                          <p className="custom">
+                            <a href={singleEvent.address} target="_blank">
+                              {singleEvent.location}
+                            </a>
+                          </p>
                         </div>
                       </div>
                       <div className="row">
