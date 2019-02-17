@@ -27,13 +27,16 @@ router.get("/search/:pageNo", (req, res) => {
       };
       return res.json(response);
     }
-    query.skip = 5 * (pageNo - 1);
-    query.limit = 5;
+    query.skip = 1000 * (pageNo - 1);
+    query.limit = 1000;
     Dev.find(
       {
-        events: {
-          $elemMatch: { title: { $regex: req.query.search, $options: "i" } }
-        }
+        $or: [
+          { title: { $regex: req.query.search, $options: "i" } },
+          { time: { $regex: req.query.search, $options: "i" } },
+          { location: { $regex: req.query.search, $options: "i" } },
+          { descript: { $regex: req.query.search, $options: "i" } }
+        ]
       },
       {},
       query,
@@ -95,8 +98,8 @@ router.get("/dev/:pageNo", (req, res) => {
     };
     return res.json(response);
   }
-  query.skip = 5 * (pageNo - 1);
-  query.limit = 5;
+  query.skip = 1000 * (pageNo - 1);
+  query.limit = 1000;
   // Find some documents
   Dev.find({}, {}, query, function(err, data) {
     // Mongo command to fetch all data from collection.

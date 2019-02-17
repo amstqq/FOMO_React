@@ -28,41 +28,39 @@ export default class SideBarItem extends React.Component {
         >
           {/* <img src="images/featured1.jpg" className="img-fluid" alt="#" /> */}
           <div className="featured-title-box">
-            {this.props.event.events.map(singleEvent => (
-              <div className="my-3">
-                <h6 className="custom">{singleEvent.title}</h6>
-                <div className="row">
-                  <div className="col-1">
-                    <span className="icon-clock custom" />
-                  </div>
-                  <div className="col">
-                    <span>
-                      <p className="custom">{singleEvent.time}</p>
-                    </span>
-                  </div>
+            <div className="my-3">
+              <h6 className="custom">{this.props.event.title}</h6>
+              <div className="row">
+                <div className="col-1">
+                  <span className="icon-clock custom" />
                 </div>
-                <div className="row">
-                  <div className="col-1">
-                    <span className="icon-location-pin custom" />
-                  </div>
-                  <div className="col">
-                    <span>
-                      <p className="custom">{singleEvent.location}</p>
-                    </span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-1">
-                    <span className="icon-notebook custom" />
-                  </div>
-                  <div className="col">
-                    <span>
-                      <p className="custom">{singleEvent.descript}</p>
-                    </span>
-                  </div>
+                <div className="col">
+                  <span>
+                    <p className="custom">{this.props.event.time}</p>
+                  </span>
                 </div>
               </div>
-            ))}
+              <div className="row">
+                <div className="col-1">
+                  <span className="icon-location-pin custom" />
+                </div>
+                <div className="col">
+                  <span>
+                    <p className="custom">{this.props.event.location}</p>
+                  </span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-1">
+                  <span className="icon-notebook custom" />
+                </div>
+                <div className="col">
+                  <span>
+                    <p className="custom">{this.props.event.descript}</p>
+                  </span>
+                </div>
+              </div>
+            </div>
             <div className="bottom-icons">
               <span className="ti-heart custom" />
               <span className="ti-bookmark custom" />

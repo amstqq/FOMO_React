@@ -22,39 +22,37 @@ export default class EventInfoMap extends React.Component {
             <div className="col-md-12">
               <div className="featured-place-wrap-non-hover">
                 <div className="featured-title-box">
-                  {event.events.map(singleEvent => (
-                    <div className="mb-4">
-                      <h6 className="custom">{singleEvent.title}</h6>
-                      <div className="row">
-                        <div className="col-1">
-                          <span className="icon-clock custom" />
-                        </div>
-                        <div className="col">
-                          <p className="custom">{singleEvent.time}</p>
-                        </div>
+                  <div className="mb-4">
+                    <h6 className="custom">{event.title}</h6>
+                    <div className="row">
+                      <div className="col-1">
+                        <span className="icon-clock custom" />
                       </div>
-                      <div className="row">
-                        <div className="col-1">
-                          <span className="icon-location-pin custom" />
-                        </div>
-                        <div className="col">
-                          <p className="custom">
-                            <a href={singleEvent.address} target="_blank">
-                              {singleEvent.location}
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-1">
-                          <span className="icon-notebook custom" />
-                        </div>
-                        <div className="col">
-                          <p className="custom">{singleEvent.descript}</p>
-                        </div>
+                      <div className="col">
+                        <p className="custom">{event.time}</p>
                       </div>
                     </div>
-                  ))}
+                    <div className="row">
+                      <div className="col-1">
+                        <span className="icon-location-pin custom" />
+                      </div>
+                      <div className="col">
+                        <p className="custom">
+                          <a href={event.address} target="_blank">
+                            {event.location}
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-1">
+                        <span className="icon-notebook custom" />
+                      </div>
+                      <div className="col">
+                        <p className="custom">{event.descript}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
