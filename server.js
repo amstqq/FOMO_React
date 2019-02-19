@@ -12,6 +12,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "public", "index.html"));
 });
 
-app.listen(config.port, () => {
+app.listen(process.env.port, () => {
   console.info("Express listening on port", process.env.port);
 });
