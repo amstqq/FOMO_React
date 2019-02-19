@@ -2,8 +2,9 @@ var webpack = require("webpack");
 var path = require("path");
 
 module.exports = {
+  entry: "./client/src/index.js",
   output: {
-    path: path.resolve(__dirname, "public"), 
+    path: path.resolve(__dirname, "client", "public"),
     filename: "bundle.js"
   },
   module: {
@@ -16,5 +17,5 @@ module.exports = {
         }
       }
     ]
-  },
+  }
 };

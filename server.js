@@ -1,21 +1,17 @@
-import config from './config';
-import apiRouter from './api';
+import config from "./config";
+import apiRouter from "./api";
+import path from "path";
 
-import express from 'express';
-const server = express();
+import express from "express";
+const app = express();
 
-server.set('view engine', 'ejs');
+app.use("/api", apiRouter);
+app.use(express.static(path.join(__dirname, "client", "public")));
 
-server.get('/', (req, res) => {
-  
-  res.render('index', {
-    content: 'Loading...'
-  });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "public", "index.html"));
 });
 
-server.use('/api', apiRouter);
-server.use(express.static('public'));
-
-server.listen(config.port, () => {
-  console.info('Express listening on port', config.port);
+app.listen(config.port, () => {
+  console.info("Express listening on port", config.port);
 });

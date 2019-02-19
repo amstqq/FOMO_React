@@ -6,7 +6,6 @@ import config from "../config";
 mongoose.connect(config.mongodbUri, { useNewUrlParser: true }, err => {
   // If err is not equal to null, we exit the program with error
   assert.equal(null, err);
-  console.log(`Connected to ${config.mongodbUri}`);
 });
 
 const router = express.Router();
