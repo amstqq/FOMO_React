@@ -1,6 +1,5 @@
 import React from "react";
 import EventsMap from "./EventsMap";
-// import config from "../../../../config";
 
 class MapContainer extends React.PureComponent {
   render() {

@@ -1,6 +1,6 @@
 var webpack = require("webpack");
 var path = require("path");
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config();
 
 module.exports = {
   entry: "./client/src/index.js",
