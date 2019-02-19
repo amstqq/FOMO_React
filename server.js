@@ -1,5 +1,6 @@
 import apiRouter from "./api";
 import path from "path";
+// import config from "./config";
 
 import express from "express";
 const app = express();
