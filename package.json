@@ -9,6 +9,7 @@
     "dev-client": "webpack-dev-server --mode development --open",
     "heroku-postbuild": "npm install && webpack"
   },
+  "engines":{"8.12.0"},
   "author": "Jackie Dong",
   "license": "ISC",
   "dependencies": {
