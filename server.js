@@ -1,4 +1,3 @@
-import config from "./config";
 import apiRouter from "./api";
 import path from "path";
 

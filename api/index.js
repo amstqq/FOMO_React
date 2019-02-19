@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import assert from "assert";
-import config from "../config";
 
 mongoose.connect(process.env.mongodbUri, { useNewUrlParser: true }, err => {
   // If err is not equal to null, we exit the program with error
