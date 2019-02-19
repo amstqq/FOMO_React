@@ -7,5 +7,5 @@
 ## To deploy on Heroku
 
 1. https://coursework.vschool.io/deploying-mern-with-heroku/ for basic guidlines
-2. Make sure the port is specified as `process.env.PORT`. Heroku dynamically assigns the application to a port using environment variable.
+2. Make sure the port is specified as `process.env.PORT`. Heroku dynamically assigns the application to a port using this environment variable. You should not assign a port environment variable in Heroku but let Heroku dynamically assign it itself.
 3.
