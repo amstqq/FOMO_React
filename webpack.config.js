@@ -17,10 +17,10 @@ module.exports = {
         }
       }
     ]
-  }
-  plugins: [    
-    new webpack.DefinePlugin({           
+  },
+  plugins: [
+    new webpack.DefinePlugin({
       API_KEY: JSON.stringify(process.env.apiKey)
     })
-  ],
+  ]
 };
