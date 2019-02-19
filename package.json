@@ -4,9 +4,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "npx nodemon --exec babel-node server.js --ignore public/",
-    "dev": "npx webpack -wd",
-    "dev-client": "webpack-dev-server --mode development --open"
+    "start": "nodemon --exec babel-node server.js --ignore public/",
+    "dev": "webpack -wd",
+    "dev-client": "webpack-dev-server --mode development --open",
+    "heroku-postbuild": "npm install && webpack"
   },
   "author": "Jackie Dong",
   "license": "ISC",
