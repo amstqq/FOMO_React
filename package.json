@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node --exec babel-node server.js",
+    "start": "babel-node server.js",
     "dev-start": "nodemon --exec babel-node server.js --ignore public/",
     "dev-build": "webpack -wd",
     "dev-client": "webpack-dev-server --mode development --open",
