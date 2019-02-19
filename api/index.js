@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import assert from "assert";
-// import config from "../../config";
+import {} from "dotenv/config";
 
-mongoose.connect(process.env.mongodbUri, { useNewUrlParser: true }, err => {
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, err => {
   // If err is not equal to null, we exit the program with error
   assert.equal(null, err);
 });

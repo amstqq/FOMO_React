@@ -1,5 +1,6 @@
 var webpack = require("webpack");
 var path = require("path");
+require("dotenv").config({ path: "./.env" });
 
 module.exports = {
   entry: "./client/src/index.js",
@@ -20,7 +21,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      API_KEY: JSON.stringify(process.env.apiKey)
+      API_KEY: JSON.stringify(process.env.API_KEY)
     })
   ]
 };
