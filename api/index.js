@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import assert from "assert";
 import config from "../config";
 
-mongoose.connect(config.mongodbUri, { useNewUrlParser: true }, err => {
+mongoose.connect(process.env.mongodbUri, { useNewUrlParser: true }, err => {
   // If err is not equal to null, we exit the program with error
   assert.equal(null, err);
 });

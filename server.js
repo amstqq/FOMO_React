@@ -13,5 +13,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(config.port, () => {
-  console.info("Express listening on port", config.port);
+  console.info("Express listening on port", process.env.port);
 });
