@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import SideBar from "./sideBar/SideBar";
+import SideBar from "./sidebar/SideBar";
 import MapContainer from "./map/MapContainer";
 
 class App extends React.Component {
